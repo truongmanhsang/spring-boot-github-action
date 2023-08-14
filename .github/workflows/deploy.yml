@@ -15,18 +15,22 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Build and Push Docker Image
+      - name: Build Docker Image
         run: |
-          ssh -o StrictHostKeyChecking=no -i /dev/null ${{ secrets.SSH_USER }}@${{ secrets.EC2_HOST }} 'bash -s' << 'ENDSSH'
-          git clone https://github.com/truongmanhsang/spring-boot-github-action.git
-          cd spring-boot-github-action
-          git pull
-          docker build -t spring-boot-github-action .
-          docker tag spring-boot-github-action:latest truongmanhsang/spring-boot-github-action:latest
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push truongmanhsang/spring-boot-github-action:latest
-          ENDSSH
+          docker buildx create --use
+          docker buildx build --file Dockerfile --tag truongmanhsang/spring-boot-github-action:latest .
+
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        
+      - name: Push Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx build --file Dockerfile --tag truongmanhsang/spring-boot-github-action:latest --push .
 
       - name: Deploy using Kubernetes
         run: |
