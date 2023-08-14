@@ -31,5 +31,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i /dev/null ${{ secrets.SSH_USER }}@${{ secrets.EC2_HOST }} 'bash -s' << 'ENDSSH'
           # Commands to be executed on the EC2 instance after connecting via SSH
-          kubectl apply -f /home/ubuntu/deployment.yml # Replace with your Kubernetes manifests
+          sudo kubectl apply -f /home/ubuntu/deployment.yml # Replace with your Kubernetes manifests
           ENDSSH
