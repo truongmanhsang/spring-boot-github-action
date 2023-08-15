@@ -36,4 +36,4 @@ spec:
       targetPort: 8080  # Should match the container port in the Deployment
   type: LoadBalancer
   externalIPs:
-  - 3.24.249.155 # Static IP above
+  - 3.104.77.229 # Static IP above
