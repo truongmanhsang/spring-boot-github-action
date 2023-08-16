@@ -2,7 +2,7 @@ name: Java App Deployment
 on:
   push:
     branches:
-      - develop
+      - eks
 
 jobs:
   deploy:
