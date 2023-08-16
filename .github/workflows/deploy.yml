@@ -50,7 +50,7 @@ jobs:
 
       - name: Apply Kubernetes Manifests
         run: |
-          kubectl apply -f deployment.yaml
+          kubectl apply -f deployment.yml
 
       - name: Check Deployment Status
         run: kubectl rollout status deployment/spring-boot-app
