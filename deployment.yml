@@ -43,7 +43,7 @@ metadata:
   labels:
     app: spring-boot-ingress-app
   annotations:
-    kubernetes.io/ingress.class: alb
+    spec.ingressClassName: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
