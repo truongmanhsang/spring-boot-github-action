@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: spring-boot-app
 spec:
-  replicas: 2  # Adjust the number of replicas as needed
+  replicas: 1  # Adjust the number of replicas as needed
   strategy:
     type: RollingUpdate
   selector:
@@ -43,7 +43,7 @@ metadata:
   labels:
     app: spring-boot-ingress-app
   annotations:
-    kubernetes.io/ingress.class: alb
+    spec.ingressClassName: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
